@@ -1,0 +1,14 @@
+﻿@model OLX.tbl_Auction
+
+<h2>Are You Sure You want To Delete This Auction</h2>
+
+<form method="post">
+    <input name="id" value="@Model.AuctionID" type="hidden" />
+    <button>Yes</button>
+</form>
+<br />
+<form method="get" action="Auction/">
+
+    <button>No</button>
+</form>
+

@@ -1,0 +1,54 @@
+﻿@model OLX.tbl_Auction
+
+<h2>Edit</h2>
+
+
+<form method="post" id="editform" action="Auction/Edit/">
+
+    <input type="hidden" value="@Model.AuctionID" name="id" />
+
+    <label>Title</label>
+    <input name="Title" value="@Model.Title" />
+    <br />
+
+    <label>Description</label>
+    <input name="Description" value="@Model.Description" />
+    <br />
+
+    <label>ActualAmount</label>
+    <input name="ActualAmount" value="@Model.ActualAmount" />
+    <br />
+
+    <label>StartingTime</label>
+    <input name="StartingTime" value="@Model.StartingTime" />
+    <br />
+
+    <label>EndindTime</label>
+    <input name="EndingTime" value="@Model.EndingTime" />
+    <br />
+
+    <button  class="btn btn-danger" type="button" id="saveButton">Save</button>
+
+</form>
+
+
+
+<script>
+    $("#saveButton").click(function () {
+        $.ajax({
+            url: "/Auction/Edit/",
+            method: "post",
+            data: $("#editform").serialize()
+        })
+            .done(function (response) {
+
+                $("#listingArea").html(response);
+            })
+            .fail(function () {
+
+            });
+    });
+</script>
+
+
+

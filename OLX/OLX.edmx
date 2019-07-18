@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="OLXDBContextModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_Auction">
+          <Key>
+            <PropertyRef Name="AuctionID" />
+          </Key>
+          <Property Name="AuctionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ActualAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="StartingTime" Type="datetime" Nullable="false" />
+          <Property Name="EndingTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_AuctionPicture">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PicID" Type="int" />
+          <Property Name="AuctionID" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_Picture">
+          <Key>
+            <PropertyRef Name="PicID" />
+          </Key>
+          <Property Name="PicID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="URL" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tbl_AuctionPicture_tbl_Auction">
+          <End Role="tbl_Auction" Type="Self.tbl_Auction" Multiplicity="0..1" />
+          <End Role="tbl_AuctionPicture" Type="Self.tbl_AuctionPicture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Auction">
+              <PropertyRef Name="AuctionID" />
+            </Principal>
+            <Dependent Role="tbl_AuctionPicture">
+              <PropertyRef Name="AuctionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_AuctionPicture_tbl_Picture">
+          <End Role="tbl_Picture" Type="Self.tbl_Picture" Multiplicity="0..1" />
+          <End Role="tbl_AuctionPicture" Type="Self.tbl_AuctionPicture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Picture">
+              <PropertyRef Name="PicID" />
+            </Principal>
+            <Dependent Role="tbl_AuctionPicture">
+              <PropertyRef Name="PicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OLXDBContextModelStoreContainer">
+          <EntitySet Name="tbl_Auction" EntityType="Self.tbl_Auction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_AuctionPicture" EntityType="Self.tbl_AuctionPicture" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Picture" EntityType="Self.tbl_Picture" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tbl_AuctionPicture_tbl_Auction" Association="Self.FK_tbl_AuctionPicture_tbl_Auction">
+            <End Role="tbl_Auction" EntitySet="tbl_Auction" />
+            <End Role="tbl_AuctionPicture" EntitySet="tbl_AuctionPicture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_AuctionPicture_tbl_Picture" Association="Self.FK_tbl_AuctionPicture_tbl_Picture">
+            <End Role="tbl_Picture" EntitySet="tbl_Picture" />
+            <End Role="tbl_AuctionPicture" EntitySet="tbl_AuctionPicture" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OLXDBContextModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbl_Auction">
+          <Key>
+            <PropertyRef Name="AuctionID" />
+          </Key>
+          <Property Name="AuctionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ActualAmount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="StartingTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndingTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tbl_AuctionPicture" Relationship="OLXDBContextModel.FK_tbl_AuctionPicture_tbl_Auction" FromRole="tbl_Auction" ToRole="tbl_AuctionPicture" />
+        </EntityType>
+        <EntityContainer Name="OLXDBContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_Auction" EntityType="Self.tbl_Auction" />
+          <EntitySet Name="tbl_AuctionPicture" EntityType="OLXDBContextModel.tbl_AuctionPicture" />
+          <EntitySet Name="tbl_Picture" EntityType="OLXDBContextModel.tbl_Picture" />
+          <AssociationSet Name="FK_tbl_AuctionPicture_tbl_Auction" Association="OLXDBContextModel.FK_tbl_AuctionPicture_tbl_Auction">
+            <End Role="tbl_Auction" EntitySet="tbl_Auction" />
+            <End Role="tbl_AuctionPicture" EntitySet="tbl_AuctionPicture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_AuctionPicture_tbl_Picture" Association="OLXDBContextModel.FK_tbl_AuctionPicture_tbl_Picture">
+            <End Role="tbl_Picture" EntitySet="tbl_Picture" />
+            <End Role="tbl_AuctionPicture" EntitySet="tbl_AuctionPicture" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tbl_AuctionPicture">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PicID" Type="Int32" />
+          <Property Name="AuctionID" Type="Int32" />
+          <NavigationProperty Name="tbl_Auction" Relationship="OLXDBContextModel.FK_tbl_AuctionPicture_tbl_Auction" FromRole="tbl_AuctionPicture" ToRole="tbl_Auction" />
+          <NavigationProperty Name="tbl_Picture" Relationship="OLXDBContextModel.FK_tbl_AuctionPicture_tbl_Picture" FromRole="tbl_AuctionPicture" ToRole="tbl_Picture" />
+        </EntityType>
+        <EntityType Name="tbl_Picture">
+          <Key>
+            <PropertyRef Name="PicID" />
+          </Key>
+          <Property Name="PicID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="URL" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbl_AuctionPicture" Relationship="OLXDBContextModel.FK_tbl_AuctionPicture_tbl_Picture" FromRole="tbl_Picture" ToRole="tbl_AuctionPicture" />
+        </EntityType>
+        <Association Name="FK_tbl_AuctionPicture_tbl_Auction">
+          <End Type="OLXDBContextModel.tbl_Auction" Role="tbl_Auction" Multiplicity="0..1" />
+          <End Type="OLXDBContextModel.tbl_AuctionPicture" Role="tbl_AuctionPicture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Auction">
+              <PropertyRef Name="AuctionID" />
+            </Principal>
+            <Dependent Role="tbl_AuctionPicture">
+              <PropertyRef Name="AuctionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_AuctionPicture_tbl_Picture">
+          <End Type="OLXDBContextModel.tbl_Picture" Role="tbl_Picture" Multiplicity="0..1" />
+          <End Type="OLXDBContextModel.tbl_AuctionPicture" Role="tbl_AuctionPicture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Picture">
+              <PropertyRef Name="PicID" />
+            </Principal>
+            <Dependent Role="tbl_AuctionPicture">
+              <PropertyRef Name="PicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OLXDBContextModelStoreContainer" CdmEntityContainer="OLXDBContext">
+          <EntitySetMapping Name="tbl_Auction">
+            <EntityTypeMapping TypeName="OLXDBContextModel.tbl_Auction">
+              <MappingFragment StoreEntitySet="tbl_Auction">
+                <ScalarProperty Name="AuctionID" ColumnName="AuctionID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ActualAmount" ColumnName="ActualAmount" />
+                <ScalarProperty Name="StartingTime" ColumnName="StartingTime" />
+                <ScalarProperty Name="EndingTime" ColumnName="EndingTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_AuctionPicture">
+            <EntityTypeMapping TypeName="OLXDBContextModel.tbl_AuctionPicture">
+              <MappingFragment StoreEntitySet="tbl_AuctionPicture">
+                <ScalarProperty Name="AuctionID" ColumnName="AuctionID" />
+                <ScalarProperty Name="PicID" ColumnName="PicID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Picture">
+            <EntityTypeMapping TypeName="OLXDBContextModel.tbl_Picture">
+              <MappingFragment StoreEntitySet="tbl_Picture">
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="PicID" ColumnName="PicID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
